@@ -5,6 +5,7 @@
 #include "Utility.h"
 #include "LightManager.h"
 #include "everyFrame.h"
+#include "I18n.h"
 
 namespace UI {
 
@@ -186,16 +187,16 @@ namespace UI {
       const std::vector<std::pair<std::string, RE::TESRegion*>>& regionList,
         bool& showEmittanceWindow)
     {
-        if (ImGuiMCP::Button("External Emittance")) {
+        if (ImGuiMCP::Button(QLT("External Emittance"))) {
             showEmittanceWindow = !showEmittanceWindow;
         }
 
         if (showEmittanceWindow) {
-            if (ImGuiMCP::Begin("External Emittance", &showEmittanceWindow,
+            if (ImGuiMCP::Begin(QLT("External Emittance"), &showEmittanceWindow,
                 ImGuiMCP::ImGuiWindowFlags_NoCollapse |
                 ImGuiMCP::ImGuiWindowFlags_NoDocking)) {
 
-                if (ImGuiMCP::Selectable("None", config.emittanceRegion == nullptr)) {
+                if (ImGuiMCP::Selectable(QLT("None"), config.emittanceRegion == nullptr)) {
                     config.emittanceRegion = nullptr;
                     config.externalEmittance.clear();
 
@@ -231,15 +232,15 @@ namespace UI {
        if (ImGuiMCP::IsItemHovered()) {
             ImGuiMCP::BeginTooltip();
 
-            ImGuiMCP::Text("Current region:");
+            ImGuiMCP::Text(QLT("Current region:"));
 
             ImGuiMCP::SameLine();
             ImGuiMCP::TextColored(ImGuiMCP::ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s",
                 config.externalEmittance.c_str());
 
 
-            ImGuiMCP::Text("Select a region used for external emittance "
-                "(Change light colors based on time of day, good for window lights)");
+            ImGuiMCP::Text(QLT("Select a region used for external emittance "
+                "(Change light colors based on time of day, good for window lights)"));
 
             ImGuiMCP::EndTooltip();
         }
@@ -923,7 +924,7 @@ namespace UI {
         }
         else
         {
-            // Single entry — just a flat selectable
+            // Single entry ï¿½ just a flat selectable
             ImGuiMCP::PushID(firstIdx);
             if (ImGuiMCP::Selectable(groupMenuName.c_str(), firstIdx == selectedIndex))
                 selectedIndex = firstIdx;
@@ -1025,7 +1026,7 @@ namespace UI {
 
         if (showFlagWindow) {
             ImGuiMCP::Begin(
-                "Flag Window",
+                QLT("Flag Window"),
                 &showFlagWindow,
                 ImGuiMCP::ImGuiWindowFlags_::ImGuiWindowFlags_None
             );
@@ -1115,7 +1116,7 @@ namespace UI {
 
       if (showFlagWindow) {
           ImGuiMCP::Begin(
-              "TES Light Flags",
+              QLT("TES Light Flags"),
               &showFlagWindow,
               ImGuiMCP::ImGuiWindowFlags_::ImGuiWindowFlags_None
           );
@@ -1189,7 +1190,7 @@ namespace UI {
 
           if (ImGuiMCP::IsItemHovered()) {
               ImGuiMCP::SetTooltip(
-                  "Flicker is controlled via the flicker settings menu"
+                  QLT("Flicker is controlled via the flicker settings menu")
               );
           }
 
@@ -1202,7 +1203,7 @@ namespace UI {
 
           if (ImGuiMCP::IsItemHovered()) {
               ImGuiMCP::SetTooltip(
-                  "Flicker is controlled via the flicker settings menu"
+                  QLT("Flicker is controlled via the flicker settings menu")
               );
           }
 
@@ -1215,7 +1216,7 @@ namespace UI {
 
           if (ImGuiMCP::IsItemHovered()) {
               ImGuiMCP::SetTooltip(
-                  "Flicker is controlled via the flicker settings menu"
+                  QLT("Flicker is controlled via the flicker settings menu")
               );
           }
 
@@ -1228,7 +1229,7 @@ namespace UI {
 
           if (ImGuiMCP::IsItemHovered()) {
               ImGuiMCP::SetTooltip(
-                  "Flicker is controlled via the flicker settings menu"
+                  QLT("Flicker is controlled via the flicker settings menu")
               );
           }
 

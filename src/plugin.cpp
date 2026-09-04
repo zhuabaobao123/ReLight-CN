@@ -12,6 +12,7 @@
 #include "LightAttachmentHooks.h"
 #include "vanillaMenus.h"
 #include "ini.hpp"
+#include "I18n.h"
 
 
 static void MessageHandler(SKSE::MessagingInterface::Message* msg) {
@@ -42,6 +43,8 @@ static void MessageHandler(SKSE::MessagingInterface::Message* msg) {
     {
         ini::IniParser();
 
+        Relight::I18n::Load();
+
         //cs installed dont need flicker prevention
         if (globals::islInstalled || globals::isNativeLightFlickerFixInstalled) globals::enableLightFlickerPreventionMeasures = false;
 
@@ -54,6 +57,8 @@ static void MessageHandler(SKSE::MessagingInterface::Message* msg) {
         // EVENT SINK IS USED TO REINITIALIZE LIGHTS CLEANED BY THE ENGINE 
         LightManager::registerEventSink();
 
+        // Register UI after I18n translations are loaded
+        UI::Register();
         DebugAPI_IMPL::DebugOverlayMenu::Register();
         break;
     }
@@ -67,7 +72,6 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse) {
    setupLog(spdlog::level::info);
    logger::info("Relight Plugin is Loaded");
    SKSE::GetMessagingInterface()->RegisterListener(MessageHandler);
-   UI::Register();
    hasInverseSquareLighting();
    hasNativeMeshLightFlickerFix(); 
    SKSE::AllocTrampoline(1 << 8);

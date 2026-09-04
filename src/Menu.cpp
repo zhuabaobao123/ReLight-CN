@@ -5,6 +5,7 @@
 #include "config.hpp"
 #include "forms.hpp"
 #include "ini.hpp"
+#include "I18n.h"
 
 #include <format>
 
@@ -25,17 +26,17 @@ namespace UI {
     void Register() {
         if (!SKSEMenuFramework::IsInstalled()) return;
 
-        SKSEMenuFramework::SetSection("ReLight");
+        SKSEMenuFramework::SetSection(QLT("ReLight"));
 
-        SKSEMenuFramework::AddSectionItem("Settings", RenderSettings);
+        SKSEMenuFramework::AddSectionItem(QLT("Settings"), RenderSettings);
 
-        SKSEMenuFramework::AddSectionItem("Light Editor", RenderLightEditor);
+        SKSEMenuFramework::AddSectionItem(QLT("Light Editor"), RenderLightEditor);
 
-        SKSEMenuFramework::AddSectionItem("Attach Lights", RenderAttachRemove);
+        SKSEMenuFramework::AddSectionItem(QLT("Attach Lights"), RenderAttachRemove);
 
-        SKSEMenuFramework::AddSectionItem("Light Merge", RenderLightMergeMenu);
+        SKSEMenuFramework::AddSectionItem(QLT("Light Merge"), RenderLightMergeMenu);
 
-        SKSEMenuFramework::AddSectionItem("Light Flicker Prevention", RenderLightFlickerPreventionMenu);
+        SKSEMenuFramework::AddSectionItem(QLT("Light Flicker Prevention"), RenderLightFlickerPreventionMenu);
 
         SKSEMenuFramework::AddEvent(OnMenuEvent, 0);
 
@@ -76,13 +77,13 @@ namespace UI {
         {
             ImGuiMCP::PushStyleColor(ImGuiMCP::ImGuiCol_Text, ImGuiMCP::ImVec4{ 1.0f, 0.85f, 0.4f, 1.0f });
 
-            ImGuiMCP::Text("Light Flicker Prevention");
+            ImGuiMCP::Text(QLT("Light Flicker Prevention"));
 
             ImGuiMCP::PopStyleColor();
 
             ImGuiMCP::SameLine(); 
 
-            bool saveINIClicked = ImGuiMCP::Button("Save INI");
+            bool saveINIClicked = ImGuiMCP::Button(QLT("Save INI"));
 
             ImGuiMCP::ImVec2 rectMax = ImGuiMCP::GetItemRectMax();
             ImGuiMCP::ImVec2 rectMin = ImGuiMCP::GetItemRectMin();
@@ -100,7 +101,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            ImGuiMCP::Text("(This only works with relight overhauls that use relight flags)");
+            ImGuiMCP::Text(QLT("(This only works with relight overhauls that use relight flags)"));
 
             ImGuiMCP::ImVec2 avail = ImGuiMCP::GetContentRegionAvail();
 
@@ -111,85 +112,85 @@ namespace UI {
             float colWidth = avail.x * 0.25f;
             ImGuiMCP::PushItemWidth(colWidth);
 
-            if (ImGuiMCP::Checkbox("Enable Light flicker prevention", &globals::enableLightFlickerPreventionMeasures)) {
+            if (ImGuiMCP::Checkbox(QLT("Enable Light flicker prevention"), &globals::enableLightFlickerPreventionMeasures)) {
             }
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Only the 7 closest lights can affect a surface");
+                ImGuiMCP::SetTooltip(QLT("Only the 7 closest lights can affect a surface"));
             }
 
-            ImGuiMCP::SliderInt("Max Surface Size Flicker Prevention", &globals::largeSurfaceSize, 0, 5000);
+            ImGuiMCP::SliderInt(QLT("Max Surface Size Flicker Prevention"), &globals::largeSurfaceSize, 0, 5000);
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Surfaces larger than this will not participate in light flicker prevention (windhelm bridge is size 2300 and has many lights on it makes no sense to limit to only 7");
+                ImGuiMCP::SetTooltip(QLT("Surfaces larger than this will not participate in light flicker prevention (windhelm bridge is size 2300 and has many lights on it makes no sense to limit to only 7"));
             }
 
-            ImGuiMCP::SliderInt("Medium surface size", &globals::mediumSurfaceSize, 0, 1500);
+            ImGuiMCP::SliderInt(QLT("Medium surface size"), &globals::mediumSurfaceSize, 0, 1500);
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Distance checks are only enforced on surfaces (Trishape WorldBound) smaller than this");
+                ImGuiMCP::SetTooltip(QLT("Distance checks are only enforced on surfaces (Trishape WorldBound) smaller than this"));
             }
 
-            ImGuiMCP::SliderInt("Small surface size", &globals::smallSurfaceSize, 0, 1000);
+            ImGuiMCP::SliderInt(QLT("Small surface size"), &globals::smallSurfaceSize, 0, 1000);
             if (ImGuiMCP::IsItemHovered()) { 
-                ImGuiMCP::SetTooltip("Any surface (Trishape WorldBound) size larger will not have max light type per surface enforced on it");
+                ImGuiMCP::SetTooltip(QLT("Any surface (Trishape WorldBound) size larger will not have max light type per surface enforced on it"));
             }
-            ImGuiMCP::SliderInt("Candles Per SM Surface", &globals::maxCandlesPerSurfaceSM, 0, 7);
+            ImGuiMCP::SliderInt(QLT("Candles Per SM Surface"), &globals::maxCandlesPerSurfaceSM, 0, 7);
             if (ImGuiMCP::IsItemHovered())
             {
-                ImGuiMCP::SetTooltip("Max candle lights allowed on small surfaces.");
-            }
-
-            ImGuiMCP::SliderInt("Chandeliers Per SM Surface", &globals::maxChandeliersPerSurfaceSM, 0, 7);
-            if (ImGuiMCP::IsItemHovered())
-            {
-                ImGuiMCP::SetTooltip("Max chandelier lights allowed on small surfaces.");
+                ImGuiMCP::SetTooltip(QLT("Max candle lights allowed on small surfaces."));
             }
 
-            ImGuiMCP::SliderInt("Fires Per SM Surface", &globals::maxFiresPerSurfaceSM, 0, 7);
+            ImGuiMCP::SliderInt(QLT("Chandeliers Per SM Surface"), &globals::maxChandeliersPerSurfaceSM, 0, 7);
             if (ImGuiMCP::IsItemHovered())
             {
-                ImGuiMCP::SetTooltip("Max fire lights allowed on small surfaces.");
+                ImGuiMCP::SetTooltip(QLT("Max chandelier lights allowed on small surfaces."));
+            }
+
+            ImGuiMCP::SliderInt(QLT("Fires Per SM Surface"), &globals::maxFiresPerSurfaceSM, 0, 7);
+            if (ImGuiMCP::IsItemHovered())
+            {
+                ImGuiMCP::SetTooltip(QLT("Max fire lights allowed on small surfaces."));
             }
 
             ImGuiMCP::NextColumn(); 
             ImGuiMCP::PushItemWidth(colWidth);
 
-            ImGuiMCP::SliderInt("Candles Per M Surface", &globals::maxCandlesPerSurfaceM, 0, 10);
+            ImGuiMCP::SliderInt(QLT("Candles Per M Surface"), &globals::maxCandlesPerSurfaceM, 0, 10);
             if (ImGuiMCP::IsItemHovered())
             {
-                ImGuiMCP::SetTooltip("Max candle lights allowed on medium surfaces.");
+                ImGuiMCP::SetTooltip(QLT("Max candle lights allowed on medium surfaces."));
             }
 
-            ImGuiMCP::SliderInt("Chandeliers Per M Surface", &globals::maxChandeliersPerSurfaceM, 0, 10);
+            ImGuiMCP::SliderInt(QLT("Chandeliers Per M Surface"), &globals::maxChandeliersPerSurfaceM, 0, 10);
             if (ImGuiMCP::IsItemHovered())
             {
-                ImGuiMCP::SetTooltip("Max chandelier lights allowed on medium surfaces.");
+                ImGuiMCP::SetTooltip(QLT("Max chandelier lights allowed on medium surfaces."));
             }
 
-            ImGuiMCP::SliderInt("Fires Per M Surface", &globals::maxFiresPerSurfaceM, 0, 10);
+            ImGuiMCP::SliderInt(QLT("Fires Per M Surface"), &globals::maxFiresPerSurfaceM, 0, 10);
             if (ImGuiMCP::IsItemHovered())
             {
-                ImGuiMCP::SetTooltip("Max fire lights allowed on medium surfaces.");
+                ImGuiMCP::SetTooltip(QLT("Max fire lights allowed on medium surfaces."));
             }
 
-            ImGuiMCP::SliderFloat("Max Candle Distance", &globals::maxCandleDistance, 0, 1000);
+            ImGuiMCP::SliderFloat(QLT("Max Candle Distance"), &globals::maxCandleDistance, 0, 1000);
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Max distance a candle can be to affect a medium and small surface (requires kCandle flag)");
+                ImGuiMCP::SetTooltip(QLT("Max distance a candle can be to affect a medium and small surface (requires kCandle flag)"));
             }
 
-            ImGuiMCP::SliderFloat("Max Candle Z Distance", &globals::maxCandleZDistance, 0, 500);
+            ImGuiMCP::SliderFloat(QLT("Max Candle Z Distance"), &globals::maxCandleZDistance, 0, 500);
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Maximum distance a candle can shine light on a medium and small surface below it (requires kCandle flag)");
+                ImGuiMCP::SetTooltip(QLT("Maximum distance a candle can shine light on a medium and small surface below it (requires kCandle flag)"));
             }
 
-            ImGuiMCP::SliderFloat("Max Chandelier Distance", &globals::maxChandelierDistance, 0, 200);
+            ImGuiMCP::SliderFloat(QLT("Max Chandelier Distance"), &globals::maxChandelierDistance, 0, 200);
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Max distance a chandelier can be to affect a medium and small surface (requires kChandelier flag)");
+                ImGuiMCP::SetTooltip(QLT("Max distance a chandelier can be to affect a medium and small surface (requires kChandelier flag)"));
             }
 
-            ImGuiMCP::SliderFloat("Max Chandelier Z Distance", &globals::maxChandelierZDistance, 0, 1000);
+            ImGuiMCP::SliderFloat(QLT("Max Chandelier Z Distance"), &globals::maxChandelierZDistance, 0, 1000);
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Maximum vertical distance a chandelier can affect a medium and small surface (requires kChandelier flag)");
+                ImGuiMCP::SetTooltip(QLT("Maximum vertical distance a chandelier can affect a medium and small surface (requires kChandelier flag)"));
             }
   
             ImGuiMCP::PopItemWidth(); 
@@ -206,13 +207,13 @@ namespace UI {
         {
             ImGuiMCP::PushStyleColor(ImGuiMCP::ImGuiCol_Text, ImGuiMCP::ImVec4{ 1.0f, 0.85f, 0.4f, 1.0f });
 
-            ImGuiMCP::Text("Light Merge");
+            ImGuiMCP::Text(QLT("Light Merge"));
 
             ImGuiMCP::PopStyleColor();
 
             ImGuiMCP::SameLine(); 
 
-            bool saveINIClicked = ImGuiMCP::Button("Save INI");
+            bool saveINIClicked = ImGuiMCP::Button(QLT("Save INI"));
 
             ImGuiMCP::ImVec2 rectMax = ImGuiMCP::GetItemRectMax();
             ImGuiMCP::ImVec2 rectMin = ImGuiMCP::GetItemRectMin();
@@ -230,7 +231,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            ImGuiMCP::Text("(This only works with relight lights that use relight flags)");
+            ImGuiMCP::Text(QLT("(This only works with relight lights that use relight flags)"));
 
             ImGuiMCP::Spacing();
 
@@ -244,80 +245,80 @@ namespace UI {
             float colWidth = avail.x * 0.25f;
             ImGuiMCP::PushItemWidth(colWidth);
 
-            if (ImGuiMCP::Checkbox("Enable Light Merging", &globals::enableLightMerging)) {
+            if (ImGuiMCP::Checkbox(QLT("Enable Light Merging"), &globals::enableLightMerging)) {
             }
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Enable / Disable light merging");
+                ImGuiMCP::SetTooltip(QLT("Enable / Disable light merging"));
             }
 
 
-            if (ImGuiMCP::Checkbox("Enable Shadow Light Merging", &globals::enableShadowLightMerging)) {
+            if (ImGuiMCP::Checkbox(QLT("Enable Shadow Light Merging"), &globals::enableShadowLightMerging)) {
             }
 
             if (ImGuiMCP::IsItemHovered()) {
                 ImGuiMCP::BeginTooltip();
                 ImGuiMCP::PushStyleColor(ImGuiMCP::ImGuiCol_Text, ImGuiMCP::ImVec4(1.0f, 0.2f, 0.2f, 1.0f));
-                ImGuiMCP::Text("WARNING: Disabling shadow light merging can cause you to exceed skyrims 4 shadow light limit per area");
-                ImGuiMCP::Text("Enable / Disable light merging");
+                ImGuiMCP::Text(QLT("WARNING: Disabling shadow light merging can cause you to exceed skyrims 4 shadow light limit per area"));
+                ImGuiMCP::Text(QLT("Enable / Disable light merging"));
                 ImGuiMCP::PopStyleColor();
                 ImGuiMCP::EndTooltip();
             }
 
-            ImGuiMCP::SliderInt("Max lights to merge", &globals::lightMergeMaxLights, 0, 25);
+            ImGuiMCP::SliderInt(QLT("Max lights to merge"), &globals::lightMergeMaxLights, 0, 25);
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("will merge no more then this amount of lights during 1 merge");
+                ImGuiMCP::SetTooltip(QLT("will merge no more then this amount of lights during 1 merge"));
             }
 
-            ImGuiMCP::SliderFloat("Distance to light merge", &globals::lightMergeDistance, 0, 300);
+            ImGuiMCP::SliderFloat(QLT("Distance to light merge"), &globals::lightMergeDistance, 0, 300);
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Refs placed further apart will not merge");
+                ImGuiMCP::SetTooltip(QLT("Refs placed further apart will not merge"));
             }
 
-            ImGuiMCP::SliderFloat("Merge distance increased", &globals::lightMergeSeekingDistance, 0, 300);
+            ImGuiMCP::SliderFloat(QLT("Merge distance increased"), &globals::lightMergeSeekingDistance, 0, 300);
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Used for configs with the IncreasedMergeDistance flag");
+                ImGuiMCP::SetTooltip(QLT("Used for configs with the IncreasedMergeDistance flag"));
             }
-            ImGuiMCP::SliderFloat("Merge distance shadow light", &globals::shadowLightMergeDistance, 0, 300);
+            ImGuiMCP::SliderFloat(QLT("Merge distance shadow light"), &globals::shadowLightMergeDistance, 0, 300);
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Don't turn this down its for fire meshes stacked on top of each other");
+                ImGuiMCP::SetTooltip(QLT("Don't turn this down its for fire meshes stacked on top of each other"));
             }
 
             ImGuiMCP::NextColumn();
             ImGuiMCP::PushItemWidth(colWidth);
 
 
-            ImGuiMCP::SliderFloat("Z distance allowed to merge", &globals::fMaxZDiffToMerge, 0, 300);
+            ImGuiMCP::SliderFloat(QLT("Z distance allowed to merge"), &globals::fMaxZDiffToMerge, 0, 300);
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("If z distance is greater, will not merge");
+                ImGuiMCP::SetTooltip(QLT("If z distance is greater, will not merge"));
             }
 
-            ImGuiMCP::SliderFloat("Z distance Increased", &globals::fMaxZDiffToMergeIncreased, 0, 300);
+            ImGuiMCP::SliderFloat(QLT("Z distance Increased"), &globals::fMaxZDiffToMergeIncreased, 0, 300);
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("For configs with the IncreasedMergeDistance flag");
+                ImGuiMCP::SetTooltip(QLT("For configs with the IncreasedMergeDistance flag"));
             }
 
-            ImGuiMCP::SliderFloat("Fade Boost per Merge", &globals::lightFadePerMerge, 0.0f, 1.0f);
+            ImGuiMCP::SliderFloat(QLT("Fade Boost per Merge"), &globals::lightFadePerMerge, 0.0f, 1.0f);
             if (ImGuiMCP::IsItemHovered())
-                ImGuiMCP::SetTooltip("Increase in fade per additional merged light.");
+                ImGuiMCP::SetTooltip(QLT("Increase in fade per additional merged light."));
 
-            ImGuiMCP::SliderFloat("Radius Boost per Merge", &globals::lightRadiusPerMerge, 0.0f, 1.0f);
+            ImGuiMCP::SliderFloat(QLT("Radius Boost per Merge"), &globals::lightRadiusPerMerge, 0.0f, 1.0f);
             if (ImGuiMCP::IsItemHovered())
-                ImGuiMCP::SetTooltip("Increase in radius per additional merged light.");
+                ImGuiMCP::SetTooltip(QLT("Increase in radius per additional merged light."));
 
-            ImGuiMCP::SliderFloat("Max Fade Multiplier", &globals::lightFadeMax, 1.0f, 5.0f);
+            ImGuiMCP::SliderFloat(QLT("Max Fade Multiplier"), &globals::lightFadeMax, 1.0f, 5.0f);
             if (ImGuiMCP::IsItemHovered())
-                ImGuiMCP::SetTooltip("Max fade mult after merging.");
+                ImGuiMCP::SetTooltip(QLT("Max fade mult after merging."));
 
-            ImGuiMCP::SliderFloat("Max Radius Multiplier", &globals::lightRadiusMax, 1.0f, 5.0f);
+            ImGuiMCP::SliderFloat(QLT("Max Radius Multiplier"), &globals::lightRadiusMax, 1.0f, 5.0f);
             if (ImGuiMCP::IsItemHovered())
-                ImGuiMCP::SetTooltip("Max radius mult after merging.");
+                ImGuiMCP::SetTooltip(QLT("Max radius mult after merging."));
 
             ImGuiMCP::PopItemWidth();
         }
@@ -331,14 +332,14 @@ namespace UI {
         FontAwesome::PushSolid();
         auto iconUtf8 = FontAwesome::UnicodeToUtf8(0xf0eb);
 
-        ImGuiMCP::Text("%s ReLight Menu", iconUtf8.c_str());
+        ImGuiMCP::Text(QLT("%s ReLight Menu"), iconUtf8.c_str());
         ImGuiMCP::PopStyleColor();
         ImGuiMCP::SameLine();
 
-        bool saveINIClicked = ImGuiMCP::Button("Save INI");
+        bool saveINIClicked = ImGuiMCP::Button(QLT("Save INI"));
 
         if (ImGuiMCP::IsItemHovered())
-            ImGuiMCP::SetTooltip("Write current settings to ReLight.ini");
+            ImGuiMCP::SetTooltip(QLT("Write current settings to ReLight.ini"));
 
         ImGuiMCP::ImVec2 rectMax = ImGuiMCP::GetItemRectMax();
         ImGuiMCP::ImVec2 rectMin = ImGuiMCP::GetItemRectMin();
@@ -358,42 +359,40 @@ namespace UI {
 
         ImGuiMCP::SameLine(); 
 
-        if (ImGuiMCP::Button("Debug log all lights")) {
+        if (ImGuiMCP::Button(QLT("Debug log all lights"))) {
             debugLogAllLights();
         }
 
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Log all currently active relight lights to relight.log file");
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Log all currently active relight lights to relight.log file"));
 
         ImGuiMCP::Separator();
 
-        ImGuiMCP::Checkbox("Disable Game Lights", &globals::disableGameLights);
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Disable all game lights except for those in exclude by light editor ID section in Relight.ini\n Used so the Relight Official light add on can start with a clean base");
+        ImGuiMCP::Checkbox(QLT("Disable Game Lights"), &globals::disableGameLights);
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Disable all game lights except for those in exclude by light editor ID section in Relight.ini\n Used so the Relight Official light add on can start with a clean base"));
 
-        ImGuiMCP::Checkbox("Remove Fake Glow Orbs", &globals::removeFakeGlowOrbs);
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Remove fake glow orbs used by Bethesda");
+        ImGuiMCP::Checkbox(QLT("Remove Fake Glow Orbs"), &globals::removeFakeGlowOrbs);
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Remove fake glow orbs used by Bethesda"));
 
-        ImGuiMCP::Checkbox("All Relights As ISL", &globals::allRelightsAsISL);
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Make all Relights have Inverse Squared Lighting regardless of ISL flag fake glow orbs used by Bethesda, Requires Cell Rrset");
+        ImGuiMCP::Checkbox(QLT("All Relights As ISL"), &globals::allRelightsAsISL);
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Make all Relights have Inverse Squared Lighting regardless of ISL flag fake glow orbs used by Bethesda, Requires Cell Rrset"));
 
-        ImGuiMCP::Checkbox("Enable Debugging Light Bulbs", &globals::enableDebugLightBulbs);
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Show Creation Kit Style Light Bulbs Where Lights Were Placed");
+        ImGuiMCP::Checkbox(QLT("Enable Debugging Light Bulbs"), &globals::enableDebugLightBulbs);
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Show Creation Kit Style Light Bulbs Where Lights Were Placed"));
 
-        ImGuiMCP::Checkbox("Draw Debug Lines", &globals::enableDebugLines);
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Draw Lines Around Lights to make positioning easier");
+        ImGuiMCP::Checkbox(QLT("Draw Debug Lines"), &globals::enableDebugLines);
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Draw Lines Around Lights to make positioning easier"));
 
-        ImGuiMCP::SliderInt(
-            "Max distance from light to draw debug lights",
+        ImGuiMCP::SliderInt(QLT("Max distance from light to draw debug lights"),
             &globals::distanceForDrawDebugLines,
             0,
             10000,
             "%d");
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Any light futher then this value will not draw debug lines");
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Any light futher then this value will not draw debug lines"));
             
 
         ImGuiMCP::Separator();
 
-        if (ImGuiMCP::SliderFloat(
-            "Brightness Multiplier",
+        if (ImGuiMCP::SliderFloat(QLT("Brightness Multiplier"),
             &globals::brightnessModifier,
             0.1f,
             2.0f,
@@ -440,10 +439,9 @@ namespace UI {
             }
         }
 
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Change brightness of all Relight lights.");
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Change brightness of all Relight lights."));
 
-        if (ImGuiMCP::SliderFloat(
-            "Non SKSE Lights Brightness Multiplier",
+        if (ImGuiMCP::SliderFloat(QLT("Non SKSE Lights Brightness Multiplier"),
             &globals::vanillaBrightnessModifier,
             0.1f,
             2.0f,
@@ -452,11 +450,11 @@ namespace UI {
 
         if (ImGuiMCP::IsItemHovered()) {
             ImGuiMCP::BeginTooltip();
-            ImGuiMCP::Text("This only works on cell reset");
+            ImGuiMCP::Text(QLT("This only works on cell reset"));
             ImGuiMCP::EndTooltip();
         }
 
-        if (ImGuiMCP::SliderInt("Logging Level", &globals::loggingLevel, 0, 3)) {
+        if (ImGuiMCP::SliderInt(QLT("Logging Level"), &globals::loggingLevel, 0, 3)) {
             spdlog::level::level_enum lvl;
             switch (globals::loggingLevel) {
             case 0: lvl = spdlog::level::critical; break;
@@ -468,47 +466,47 @@ namespace UI {
             spdlog::set_level(lvl); 
         }
 
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(" Set Logging Level (0: critical, 1: warnings/errors, 2: info, 3: debug)");
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT(" Set Logging Level (0: critical, 1: warnings/errors, 2: info, 3: debug)"));
 
         ImGuiMCP::Separator();
 
-        if (ImGuiMCP::CollapsingHeader("Whitelist (by plugin name)")) {
+        if (ImGuiMCP::CollapsingHeader(QLT("Whitelist (by plugin name)"))) {
             for (auto& entry : globals::whitelist)
                 ImGuiMCP::Text("%s", entry.c_str());
         }
 
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Mods whos esp name are in here will not have their lights disabled by relight no matter what.");
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Mods whos esp name are in here will not have their lights disabled by relight no matter what."));
 
-        if (ImGuiMCP::CollapsingHeader("Priority Nodes")) {
+        if (ImGuiMCP::CollapsingHeader(QLT("Priority Nodes"))) {
             for (auto& entry : globals::priorityList)
                 ImGuiMCP::Text("%s", entry.c_str());
         }
 
         if (ImGuiMCP::IsItemHovered())   ImGuiMCP::SetTooltip(
-            "Relight uses partial string matching (e.g. \"candle\" matches any candle mesh).\n"
-            "This can cause unintended matches (e.g. \"candlechandelier01\").\n"
-            "Meshes listed here take priority and override broader matches."
+            QLT("Relight uses partial string matching (e.g. \"candle\" matches any candle mesh).\n"
+              "This can cause unintended matches (e.g. \"candlechandelier01\").\n"
+              "Meshes listed here take priority and override broader matches.")
         );
 
-        if (ImGuiMCP::CollapsingHeader("Excluded Mesh Paths (Exact)")) {
+        if (ImGuiMCP::CollapsingHeader(QLT("Excluded Mesh Paths (Exact)"))) {
             for (auto& entry : globals::meshPathExclusionList)
                 ImGuiMCP::Text("%s", entry.c_str());
         }
 
         if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(
-            "Relight uses partial string matching (e.g. \"candle\" matches any candle mesh).\n"
-            "This can cause unintended matches, any mesh name here will be excluded from getting Relights\n"
+            QLT("Relight uses partial string matching (e.g. \"candle\" matches any candle mesh).\n"
+              "This can cause unintended matches, any mesh name here will be excluded from getting Relights\n")
         );
 
 
-        if (ImGuiMCP::CollapsingHeader("Excluded Mesh Paths (Partial Match)")) {
+        if (ImGuiMCP::CollapsingHeader(QLT("Excluded Mesh Paths (Partial Match)"))) {
             for (auto& entry : globals::meshPathExclusionListPartialMatch)
                 ImGuiMCP::Text("%s", entry.c_str());
         }
 
         if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(
-            "Relight uses partial string matching (e.g. \"candle\" matches any candle mesh).\n"
-            "Any mesh name that contains a word in this list will be excluded from getting Relights\n"
+            QLT("Relight uses partial string matching (e.g. \"candle\" matches any candle mesh).\n"
+              "Any mesh name that contains a word in this list will be excluded from getting Relights\n")
         );
 
     }
@@ -524,22 +522,22 @@ namespace UI {
 
         FontAwesome::PushSolid();
 
-        ImGuiMCP::Text("%s Light Editor", editorIcon.c_str());
+        ImGuiMCP::Text(QLT("%s Light Editor"), editorIcon.c_str());
         ImGuiMCP::PopStyleColor();
         ImGuiMCP::SameLine();
 
-        bool saveClicked = ImGuiMCP::Button("Save");
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Save the currently selected light template's settings");
+        bool saveClicked = ImGuiMCP::Button(QLT("Save"));
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Save the currently selected light template's settings"));
 
         ImGuiMCP::SameLine(0, 10.0f);
 
-        bool defaultClicked = ImGuiMCP::Button("Default");
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Restore the currently selected light template's settings to what they were at game start");
+        bool defaultClicked = ImGuiMCP::Button(QLT("Default"));
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Restore the currently selected light template's settings to what they were at game start"));
 
         ImGuiMCP::SameLine(0, 10.0f);
 
         bool deleteClicked = ImGuiMCP::Button(trashIcon.c_str());
-        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip("Delete the Json file from Relight/Configs. You will need to restart the game for changes to take effect");
+        if (ImGuiMCP::IsItemHovered()) ImGuiMCP::SetTooltip(QLT("Delete the Json file from Relight/Configs. You will need to restart the game for changes to take effect"));
 
         ImGuiMCP::ImVec2 rectMax = ImGuiMCP::GetItemRectMax();
         ImGuiMCP::ImVec2 rectMin = ImGuiMCP::GetItemRectMin();
@@ -673,11 +671,11 @@ namespace UI {
             nullptr,
             ImGuiMCP::ImGuiWindowFlags_AlwaysAutoResize))
         {
-            ImGuiMCP::Text("Are you sure you want to delete this light template?");
+            ImGuiMCP::Text(QLT("Are you sure you want to delete this light template?"));
 
             ImGuiMCP::Spacing();
 
-            if (ImGuiMCP::Button("Delete"))
+            if (ImGuiMCP::Button(QLT("Delete")))
             {
                 deleteButton.set(buttonState::Working);
 
@@ -693,7 +691,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            if (ImGuiMCP::Button("Cancel")) {
+            if (ImGuiMCP::Button(QLT("Cancel"))) {
                 ImGuiMCP::CloseCurrentPopup();
             }
 
@@ -840,7 +838,7 @@ namespace UI {
 
                             float flagsButtonWidth = flagsTextSize.x + style->FramePadding.x * 2.0f;
 
-                            ImGuiMCP::Text("Name:");
+                            ImGuiMCP::Text(QLT("Name:"));
                             ImGuiMCP::SameLine();
                             ImGuiMCP::Dummy(ImGuiMCP::ImVec2(35.0f, 0.0f));
                             ImGuiMCP::SameLine();
@@ -856,9 +854,7 @@ namespace UI {
                             ImGuiMCP::InputText("##templateName", newTemplateName, sizeof(newTemplateName));
 
                             if (ImGuiMCP::IsItemHovered()) {
-                                ImGuiMCP::SetTooltip(
-                                    "This updates how the template name appears in the light editor."
-                                );
+                                ImGuiMCP::SetTooltip(QLT("This updates how the template name appears in the light editor."));
                             }
 
                             if (ImGuiMCP::IsItemDeactivatedAfterEdit() && config.menuName != newTemplateName) {
@@ -881,7 +877,7 @@ namespace UI {
                             ImGuiMCP::ImVec2 emittanceTextSize = ImGuiMCP::CalcTextSize("External Emittance", nullptr, false, -1.0f);
                             float emittanceButtonWidth = emittanceTextSize.x + style->FramePadding.x * 2.0f;
 
-                            ImGuiMCP::Text("Category:");
+                            ImGuiMCP::Text(QLT("Category:"));
                             ImGuiMCP::SameLine();
                             ImGuiMCP::Dummy(ImGuiMCP::ImVec2(10.0f, 0.0f));
                             ImGuiMCP::SameLine();
@@ -893,7 +889,7 @@ namespace UI {
                             ImGuiMCP::SetNextItemWidth(categoryInputWidth);
                             ImGuiMCP::InputText("##templateCategory", newTemplateCategory, sizeof(newTemplateCategory));
                             if (ImGuiMCP::IsItemHovered()) {
-                                ImGuiMCP::SetTooltip("This organizes templates into a dropdown for a cleaner layout.");
+                                ImGuiMCP::SetTooltip(QLT("This organizes templates into a dropdown for a cleaner layout."));
                             }
 
                             if (ImGuiMCP::IsItemDeactivatedAfterEdit() && config.menuCategory != newTemplateCategory)
@@ -926,11 +922,11 @@ namespace UI {
                                 ImGuiMCP::ImVec4{ 1.0f, 0.85f, 0.4f, 1.0f });
                             FontAwesome::PushSolid();
 
-                            ImGuiMCP::Text("%s Illuminance", lightbulbIcon.c_str());
+                            ImGuiMCP::Text(QLT("%s Illuminance"), lightbulbIcon.c_str());
                             ImGuiMCP::PopStyleColor();
                             ImGuiMCP::Separator();
 
-                            if (ImGuiMCP::SliderFloat("Brightness", &config.startingFade, 0.0f, brightnessToUse, "%.1f")) {
+                            if (ImGuiMCP::SliderFloat(QLT("Brightness"), &config.startingFade, 0.0f, brightnessToUse, "%.1f")) {
 
                                 auto* ssNode = RE::BSShaderManager::State::GetSingleton().shadowSceneNode[0];
                                 if (ssNode && !isPluginWithFlicker) {
@@ -952,7 +948,7 @@ namespace UI {
                     
 
                             if (!showISLSliders) {
-                                if (ImGuiMCP::SliderFloat("Radius", &lightData.radius.x, 1.0f, radiusToUse, "%.2f")) {
+                                if (ImGuiMCP::SliderFloat(QLT("Radius"), &lightData.radius.x, 1.0f, radiusToUse, "%.2f")) {
                                     auto* ssNode = RE::BSShaderManager::State::GetSingleton().shadowSceneNode[0];
                                     if (ssNode && !config.isPluginLight) {
                                         auto& rt = ssNode->GetRuntimeData();
@@ -973,7 +969,7 @@ namespace UI {
                             }
 
                              if (selectedIslRt && showISLSliders) {
-                                if (ImGuiMCP::SliderFloat("Cutoff (ISL)", &selectedIslRt->cutoffOverride, 0.01f, 0.99f, "%.2f")) {
+                                if (ImGuiMCP::SliderFloat(QLT("Cutoff (ISL)"), &selectedIslRt->cutoffOverride, 0.01f, 0.99f, "%.2f")) {
                                     auto* ssNode = RE::BSShaderManager::State::GetSingleton().shadowSceneNode[0];
                                     if (ssNode && !config.isPluginLight) {
                                         auto& rt = ssNode->GetRuntimeData();
@@ -994,7 +990,7 @@ namespace UI {
                                     }
                                 }
 
-                                if (ImGuiMCP::SliderFloat("Size (ISL)", &selectedIslRt->size, 0.0f, 10.0f, "%.2f")) {
+                                if (ImGuiMCP::SliderFloat(QLT("Size (ISL)"), &selectedIslRt->size, 0.0f, 10.0f, "%.2f")) {
                                     auto* ssNode = RE::BSShaderManager::State::GetSingleton().shadowSceneNode[0];
                                     if (ssNode && !config.isPluginLight) {
                                         auto& rt = ssNode->GetRuntimeData();
@@ -1048,15 +1044,14 @@ namespace UI {
                             ImGuiMCP::PushStyleColor(
                                 ImGuiMCP::ImGuiCol_Text,
                                 ImGuiMCP::ImVec4{ 1.0f, 0.85f, 0.4f, 1.0f });
-                            ImGuiMCP::Text("Flicker");
+                            ImGuiMCP::Text(QLT("Flicker"));
                             ImGuiMCP::PopStyleColor();
 
                             ImGuiMCP::Separator();
 
                             ImGuiMCP::BeginDisabled(config.isPluginLight && !isPluginWithFlicker);
 
-                            if (ImGuiMCP::SliderFloat(
-                                "Flicker Rate",
+                            if (ImGuiMCP::SliderFloat(QLT("Flicker Rate"),
                                 &config.flickersPerSecond,
                                 0.0f, 1.0f, "%.2f"))
                             {
@@ -1069,8 +1064,7 @@ namespace UI {
 
                             ImGuiMCP::BeginDisabled(config.flickersPerSecond == 0.0f);
 
-                            if (ImGuiMCP::SliderFloat(
-                                "Flicker Intensity",
+                            if (ImGuiMCP::SliderFloat(QLT("Flicker Intensity"),
                                 &config.flickerIntensity,
                                 0.0f, 1.0f, "%.2f"))
                             {
@@ -1082,8 +1076,7 @@ namespace UI {
                             }
                         
  
-                            if (ImGuiMCP::SliderFloat(
-                                "Movement",
+                            if (ImGuiMCP::SliderFloat(QLT("Movement"),
                                 &config.flickerAmplitude,
                                 0.0f,
                                 5,
@@ -1123,7 +1116,7 @@ namespace UI {
                             ImGuiMCP::PushStyleColor(
                                 ImGuiMCP::ImGuiCol_Text,
                                 ImGuiMCP::ImVec4{ 1.0f, 0.85f, 0.4f, 1.0f });
-                            ImGuiMCP::Text("%s Translation", coordinatesIcon.c_str());
+                            ImGuiMCP::Text(QLT("%s Translation"), coordinatesIcon.c_str());
                             ImGuiMCP::PopStyleColor();
 
                             ImGuiMCP::Separator();
@@ -1275,7 +1268,7 @@ namespace UI {
                         {
                             ImGuiMCP::PushStyleColor(ImGuiMCP::ImGuiCol_Text,
                                 ImGuiMCP::ImVec4{ 1.0f, 0.85f, 0.4f, 1.0f });
-                            ImGuiMCP::Text("%s Color (RGB)", palletIcon.c_str());
+                            ImGuiMCP::Text(QLT("%s Color (RGB)"), palletIcon.c_str());
                             ImGuiMCP::PopStyleColor();
                             ImGuiMCP::Separator();
 
@@ -1309,11 +1302,11 @@ namespace UI {
                             if (ImGuiMCP::IsItemHovered())
                             {
                                 ImGuiMCP::BeginTooltip();
-                                ImGuiMCP::Text("Click to open the color picker");
+                                ImGuiMCP::Text(QLT("Click to open the color picker"));
                                 ImGuiMCP::Separator();
-                                ImGuiMCP::Text("R: %.3f", lightData.diffuse.red);
-                                ImGuiMCP::Text("G: %.3f", lightData.diffuse.green);
-                                ImGuiMCP::Text("B: %.3f", lightData.diffuse.blue);
+                                ImGuiMCP::Text(QLT("R: %.3f"), lightData.diffuse.red);
+                                ImGuiMCP::Text(QLT("G: %.3f"), lightData.diffuse.green);
+                                ImGuiMCP::Text(QLT("B: %.3f"), lightData.diffuse.blue);
                                 ImGuiMCP::EndTooltip();
                             }
                         }
@@ -1362,14 +1355,14 @@ namespace UI {
                         {
                             ImGuiMCP::PushStyleColor(ImGuiMCP::ImGuiCol_Text,
                                 ImGuiMCP::ImVec4{ 1.0f, 0.85f, 0.4f, 1.0f });
-                            ImGuiMCP::Text("Non-Runtime Light Settings");
+                            ImGuiMCP::Text(QLT("Non-Runtime Light Settings"));
                             ImGuiMCP::PopStyleColor();
 
                             ImGuiMCP::SameLine();
 
                             ImGuiMCP::BeginDisabled(isTorchOrMagicLight);
 
-                            if (ImGuiMCP::Button("Refresh Lights")) {
+                            if (ImGuiMCP::Button(QLT("Refresh Lights"))) {
 
                                 if (config.isPluginLight) {
 
@@ -1398,7 +1391,7 @@ namespace UI {
                             }
 
                             if (ImGuiMCP::IsItemHovered()) {
-                                ImGuiMCP::SetTooltip("Changes to these settings require refreshing lights to take effect.");
+                                ImGuiMCP::SetTooltip(QLT("Changes to these settings require refreshing lights to take effect."));
                             }
 
                             ImGuiMCP::Separator();
@@ -1411,30 +1404,30 @@ namespace UI {
                             ImGuiMCP::Spacing();
                             ImGuiMCP::PushItemWidth(halfWidth);
 
-                            ImGuiMCP::SliderFloat("Fall Off", &config.falloff, 0.0f, 5.0f, "%.1f");
-                            ImGuiMCP::SliderFloat("Depth Bias", &config.depthBias, 0.0f, 30.0f, "%.2f");
+                            ImGuiMCP::SliderFloat(QLT("Fall Off"), &config.falloff, 0.0f, 5.0f, "%.1f");
+                            ImGuiMCP::SliderFloat(QLT("Depth Bias"), &config.depthBias, 0.0f, 30.0f, "%.2f");
                             if (ImGuiMCP::IsItemHovered()) {
-                                ImGuiMCP::SetTooltip("Affect shadow quality");
+                                ImGuiMCP::SetTooltip(QLT("Affect shadow quality"));
                             }
 
-                            ImGuiMCP::SliderFloat("FOV", &config.fov, 0.0f, 90.0f, "%.2f");
+                            ImGuiMCP::SliderFloat(QLT("FOV"), &config.fov, 0.0f, 90.0f, "%.2f");
                             if (ImGuiMCP::IsItemHovered()) {
-                                ImGuiMCP::SetTooltip("For Spotlights");
+                                ImGuiMCP::SetTooltip(QLT("For Spotlights"));
                             }
 
                             ImGuiMCP::NextColumn();
 
-                            ImGuiMCP::SliderFloat("Near Distance", &config.nearDistance, 0.0f, 5.0f, "%.2f");
+                            ImGuiMCP::SliderFloat(QLT("Near Distance"), &config.nearDistance, 0.0f, 5.0f, "%.2f");
                            
                             if (!config.isPluginLight) {
-                                ImGuiMCP::Checkbox("Is Shadow Light", &config.shadowLight);
+                                ImGuiMCP::Checkbox(QLT("Is Shadow Light"), &config.shadowLight);
 
                                 ImGuiMCP::BeginDisabled(!isShadowLight);
 
                                 bool isSpot =
                                     LightData::HasRelightFlag(config.flags, RELIGHT_FLAGS::kSpotLight);
 
-                                if (ImGuiMCP::Checkbox("SpotLight", &isSpot))
+                                if (ImGuiMCP::Checkbox(QLT("SpotLight"), &isSpot))
                                 {
                                     if (isSpot) {
                                         config.flags |= static_cast<int>(RELIGHT_FLAGS::kSpotLight);
@@ -1450,7 +1443,7 @@ namespace UI {
                                 }
 
                                 if (ImGuiMCP::IsItemHovered()) {
-                                    ImGuiMCP::SetTooltip("SpotLights only work for shadow lights, FOV and rotation can be used to edit them");
+                                    ImGuiMCP::SetTooltip(QLT("SpotLights only work for shadow lights, FOV and rotation can be used to edit them"));
                                 }
 
                                 ImGuiMCP::EndDisabled(); // closes !isShadowLight
@@ -1581,7 +1574,7 @@ namespace UI {
             resetState();
             ImGuiMCP::Dummy({ 0.0f, 50.0f });
             centerNextItem(350.0f);
-            ImGuiMCP::Text("Click on an object in the console to continue.");
+            ImGuiMCP::Text(QLT("Click on an object in the console to continue."));
             return;
         }
 
@@ -1637,7 +1630,7 @@ namespace UI {
         {
             ImGuiMCP::Dummy({ 0.0f, 50.0f });
             centerNextItem(470.0f);
-            ImGuiMCP::Text("Object Selected in the console already has a ReLight light.");
+            ImGuiMCP::Text(QLT("Object Selected in the console already has a ReLight light."));
 
             ImGuiMCP::Spacing();
             ImGuiMCP::Dummy({ 0.0f, 20.0f });
@@ -1746,7 +1739,7 @@ namespace UI {
             }
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("You can edit new light in Light Editor as Torch [1], Torch [2] ect.");
+                ImGuiMCP::SetTooltip(QLT("You can edit new light in Light Editor as Torch [1], Torch [2] ect."));
             }
 
             ImGuiMCP::SameLine();
@@ -1867,9 +1860,9 @@ namespace UI {
             }
             if (ImGuiMCP::IsItemHovered()) {
                 ImGuiMCP::SetTooltip(
-                    "Adds to exclude by refID section in RELight.ini file, preventing object from getting a Relight\n"
-                    "TIP: Can also use to change a automated light into a seperate light you can edit by itself in the light editor.\n"
-                    "Just push this button, then when attaching a new light select 'this object only'"
+                    QLT("Adds to exclude by refID section in RELight.ini file, preventing object from getting a Relight\n"
+                      "TIP: Can also use to change a automated light into a seperate light you can edit by itself in the light editor.\n"
+                      "Just push this button, then when attaching a new light select 'this object only'")
                 );
             }
 
@@ -1880,7 +1873,7 @@ namespace UI {
         {
             ImGuiMCP::Dummy({ 0.0f, 50.0f });
             centerNextItem(430.0f);
-            ImGuiMCP::Text("      Attaching light to object selected in console.\nCreate new light template or add to existing template?");
+            ImGuiMCP::Text(QLT("      Attaching light to object selected in console.\nCreate new light template or add to existing template?"));
 
 
             ImGuiMCP::Spacing();
@@ -1893,7 +1886,7 @@ namespace UI {
             }
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Adding to a existing template keeps your config folder uncluttered.");
+                ImGuiMCP::SetTooltip(QLT("Adding to a existing template keeps your config folder uncluttered."));
             }
 
             ImGuiMCP::SameLine();
@@ -1905,7 +1898,7 @@ namespace UI {
             }
 
             if (ImGuiMCP::IsItemHovered()) {
-                ImGuiMCP::SetTooltip("Better if you want to control this light seperatly.");
+                ImGuiMCP::SetTooltip(QLT("Better if you want to control this light seperatly."));
             }
             ImGuiMCP::SameLine();
 
@@ -2025,9 +2018,9 @@ namespace UI {
             }
             if (ImGuiMCP::IsItemHovered()) {
                 ImGuiMCP::SetTooltip(
-                    "Adds to exclude by refID section in RELight.ini file, preventing object from getting a Relight\n"
-                    "TIP: Can also use to change a automated light into a seperate light you can edit by itself in the light editor.\n"
-                    "Just push this button, then when attaching a new light select 'this object only'"
+                    QLT("Adds to exclude by refID section in RELight.ini file, preventing object from getting a Relight\n"
+                      "TIP: Can also use to change a automated light into a seperate light you can edit by itself in the light editor.\n"
+                      "Just push this button, then when attaching a new light select 'this object only'")
                 );
             }
 
@@ -2037,7 +2030,7 @@ namespace UI {
         case AttachLightStep::ChooseTemplate:
         {
             centerNextItem(120.0f);
-            ImGuiMCP::Text("Select a template.");
+            ImGuiMCP::Text(QLT("Select a template."));
 
             ImGuiMCP::Spacing();
 
@@ -2146,7 +2139,7 @@ namespace UI {
         {
             ImGuiMCP::Dummy({ 0.0f, 50.0f });
             centerNextItem(290.0f);
-            ImGuiMCP::Text("This object only, or all objects like it?");
+            ImGuiMCP::Text(QLT("This object only, or all objects like it?"));
 
             ImGuiMCP::Spacing();
             ImGuiMCP::Dummy({ 0.0f, 20.0f });
@@ -2259,13 +2252,13 @@ namespace UI {
 
                 auto a_root = selected->Get3D();
                 if (!a_root) {
-                    ImGuiMCP::Text("Could not load this object's 3D.");
+                    ImGuiMCP::Text(QLT("Could not load this object's 3D."));
                     break;
                 }
 
                 auto attachNode = a_root->AsNode();
                 if (!attachNode) {
-                    ImGuiMCP::Text("Could not load this object's node.");
+                    ImGuiMCP::Text(QLT("Could not load this object's node."));
                     break;
                 }
 
@@ -2301,7 +2294,7 @@ namespace UI {
         {
             ImGuiMCP::Dummy({ 0.0f, 50.0f });
             centerNextItem(520.0f);
-            ImGuiMCP::Text("Light attached. You MUST confirm before saving in the light editor.");
+            ImGuiMCP::Text(QLT("Light attached. You MUST confirm before saving in the light editor."));
 
             ImGuiMCP::Spacing();
             ImGuiMCP::Dummy({ 0.0f, 20.0f });
@@ -2338,7 +2331,7 @@ namespace UI {
 
             if (showMenuNameBox) {
                 ImGuiMCP::SetCursorPosX(280.0f);
-                ImGuiMCP::Text("Set Menu Name: ");
+                ImGuiMCP::Text(QLT("Set Menu Name: "));
                 ImGuiMCP::SameLine();
                 // Dummy added so both inputs for name and category are vertically aligned
                 ImGuiMCP::Dummy(ImGuiMCP::ImVec2(108.0f, 0.0f));
@@ -2353,7 +2346,7 @@ namespace UI {
 
             if (showMenuCategoryBox) {
                 ImGuiMCP::SetCursorPosX(280.0f);
-                ImGuiMCP::Text("Set Category Name (optional): ");
+                ImGuiMCP::Text(QLT("Set Category Name (optional): "));
                 ImGuiMCP::SameLine();
                 ImGuiMCP::SetNextItemWidth(250.0f);
 
@@ -2540,7 +2533,7 @@ namespace UI {
         {
             ImGuiMCP::Dummy({ 0.0f, 50.0f });
             centerNextItem(120.0f);
-            ImGuiMCP::Text("Lights removed.");
+            ImGuiMCP::Text(QLT("Lights removed."));
 
             ImGuiMCP::Dummy({ 0.0f, 20.0f });
             ImGuiMCP::Spacing();
