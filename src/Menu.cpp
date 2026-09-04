@@ -714,13 +714,13 @@ namespace UI {
         // enforced by clearing the other index whenever one changes.
         // ---------------------------------------------------------------------
         int prevRelight = relightSelectedIndex;
-        RenderLightList(relightLights, relightSelectedIndex, "Loaded ReLight Templates");
+        RenderLightList(relightLights, relightSelectedIndex, QLT("Loaded ReLight Templates"));
         if (relightSelectedIndex != prevRelight && relightSelectedIndex != -1) {
             pluginSelectedIndex = -1;
         }
 
         int prevPlugin = pluginSelectedIndex;
-        RenderLightList(pluginLights, pluginSelectedIndex, "Loaded Plugin Lights");
+        RenderLightList(pluginLights, pluginSelectedIndex, QLT("Loaded Plugin Lights"));
         if (pluginSelectedIndex != prevPlugin && pluginSelectedIndex != -1) {
             relightSelectedIndex = -1;
         }
@@ -1636,7 +1636,7 @@ namespace UI {
             ImGuiMCP::Dummy({ 0.0f, 20.0f });
             centerNextItem(400.0f);
 
-            if (RenderYellowButton("Add another Light")) {
+            if (RenderYellowButton(QLT("Add another Light"))) {
 
                 multiLight = true;
 
@@ -1744,7 +1744,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            if (RenderRedButton("Add To Light Exclusion List")) {
+            if (RenderRedButton(QLT("Add To Light Exclusion List"))) {
 
                 std::string refIDandModName = forms::BuildFormIDAndModName(formID, modName);
 
@@ -1880,7 +1880,7 @@ namespace UI {
             ImGuiMCP::Dummy({ 0.0f, 20.0f });
             centerNextItem(630.0f);
 
-            if (RenderYellowButton("Add to a existing template")) {
+            if (RenderYellowButton(QLT("Add to a existing template"))) {
                 createNewTemplate = false;
                 step = AttachLightStep::ChooseTemplate;
             }
@@ -1891,7 +1891,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            if (RenderYellowButton("Create a new template")) {
+            if (RenderYellowButton(QLT("Create a new template"))) {
                 createNewTemplate = true;
                 newCfg = LightConfig{};
                 step = AttachLightStep::ChooseScope;
@@ -1902,7 +1902,7 @@ namespace UI {
             }
             ImGuiMCP::SameLine();
 
-            if (RenderRedButton("Add To Light Exclusion List")) {
+            if (RenderRedButton(QLT("Add To Light Exclusion List"))) {
 
                 std::string refIDandModName = forms::BuildFormIDAndModName(formID, modName);
 
@@ -2088,7 +2088,7 @@ namespace UI {
 
             if (selectedIndex == -1) {
                 centerNextItem(60.0f);
-                if (RenderRedButton("Cancel")) {
+                if (RenderRedButton(QLT("Cancel"))) {
                     resetState();
                 }
                 break;
@@ -2123,13 +2123,13 @@ namespace UI {
 
             centerNextItem(170.0f);
 
-            if (RenderYellowButton("Confirm")) {
+            if (RenderYellowButton(QLT("Confirm"))) {
                 step = AttachLightStep::ChooseScope;
             }
 
             ImGuiMCP::SameLine();
 
-            if (RenderRedButton("Cancel")) {
+            if (RenderRedButton(QLT("Cancel"))) {
                 resetState();
             }
 
@@ -2146,7 +2146,7 @@ namespace UI {
 
             centerNextItem(330.0f);
 
-            if (RenderYellowButton("This object only")) {
+            if (RenderYellowButton(QLT("This object only"))) {
 
                 refLight = true;
 
@@ -2210,7 +2210,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            if (RenderYellowButton("All like this")) {
+            if (RenderYellowButton(QLT("All like this"))) {
                 refLight = false;
 
                 std::string baseIDandModName = forms::BuildFormIDAndModName(baseFormID, modName);
@@ -2282,7 +2282,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            if (RenderRedButton("Cancel")) {
+            if (RenderRedButton(QLT("Cancel"))) {
                 resetState();
                 step = AttachLightStep::SelectTarget;
             }
@@ -2360,7 +2360,7 @@ namespace UI {
 
             centerNextItem(180.0f);
 
-            if (RenderYellowButton("Confirm")) {
+            if (RenderYellowButton(QLT("Confirm"))) {
 
                 if (multiLight) {
                     entryCount = CountJsonEntriesInFile(newCfg.configPath);
@@ -2502,7 +2502,7 @@ namespace UI {
 
             ImGuiMCP::SameLine();
 
-            if (RenderRedButton("Cancel")) {
+            if (RenderRedButton(QLT("Cancel"))) {
                 RE::ObjectRefHandle handle = selected->GetHandle();
 
                 if (!selectedCfgs.empty()) {
@@ -2539,7 +2539,7 @@ namespace UI {
             ImGuiMCP::Spacing();
 
             centerNextItem(50.0f);
-            if (RenderYellowButton("Okay")) {
+            if (RenderYellowButton(QLT("Okay"))) {
                 step = AttachLightStep::SelectTarget;
                 break;
             }

@@ -165,6 +165,16 @@
     "Position": "位置",
     "Rotation": "旋转",
     "RGB": "RGB",
-    "Community Shaders Flags": "Community Shaders 标志"
+    "Community Shaders Flags": "Community Shaders 标志",
+    "Loaded ReLight Templates": "已载入的 ReLight 模板",
+    "Loaded Plugin Lights": "已载入的插件光源",
+    "Add another Light": "再添加一个光源",
+    "Add to a existing template": "添加到现有模板",
+    "Create a new template": "创建新模板",
+    "This object only": "仅此物体",
+    "All like this": "所有同类物体",
+    "Okay": "确定",
+    "Confirm": "确认",
+    "Add To Light Exclusion List": "加入光源排除列表"
   }
 }
