@@ -658,7 +658,7 @@ namespace UI {
 
         if (deleteClicked) {
             if (active.valid()) {
-                ImGuiMCP::OpenPopup("Confirm Delete Light Template");
+                ImGuiMCP::OpenPopup(QLT("Confirm Delete Light Template"));
             }
             else {
                 logger::warn("Delete clicked but no light selected");
@@ -667,7 +667,7 @@ namespace UI {
         }
 
         if (ImGuiMCP::BeginPopupModal(
-            "Confirm Delete Light Template",
+            QLT("Confirm Delete Light Template"),
             nullptr,
             ImGuiMCP::ImGuiWindowFlags_AlwaysAutoResize))
         {
@@ -874,7 +874,7 @@ namespace UI {
                             newTemplateCategory[sizeof(newTemplateCategory) - 1] = '\0';
 
                             // --- Category row ---
-                            ImGuiMCP::ImVec2 emittanceTextSize = ImGuiMCP::CalcTextSize("External Emittance", nullptr, false, -1.0f);
+                            ImGuiMCP::ImVec2 emittanceTextSize = ImGuiMCP::CalcTextSize(QLT("External Emittance"), nullptr, false, -1.0f);
                             float emittanceButtonWidth = emittanceTextSize.x + style->FramePadding.x * 2.0f;
 
                             ImGuiMCP::Text(QLT("Category:"));
@@ -1122,7 +1122,7 @@ namespace UI {
                             ImGuiMCP::Separator();
 
                             if (ImGuiMCP::SliderFloat3(
-                                "Position",
+                                QLT("Position"),
                                 &config.position[0],
                                 -sliderRange, sliderRange, "%.3f")) {               
 
@@ -1176,7 +1176,7 @@ namespace UI {
                            if (isSpotLight)
                             {
                                 if (ImGuiMCP::SliderFloat3(
-                                    "Rotation",
+                                    QLT("Rotation"),
                                     &config.rotation[0],
                                     -180.0f,
                                     180.0f,
@@ -1272,7 +1272,7 @@ namespace UI {
                             ImGuiMCP::PopStyleColor();
                             ImGuiMCP::Separator();
 
-                            if (ImGuiMCP::SliderInt3("RGB", &config.diffuseColor[0], 0, 255))
+                            if (ImGuiMCP::SliderInt3(QLT("RGB"), &config.diffuseColor[0], 0, 255))
                             {
                                 RE::NiColor runtimeColor{
                                     config.diffuseColor[0] / 255.0f,
@@ -1314,7 +1314,7 @@ namespace UI {
 
                         if (colorPickerOpen)
                         {
-                            if (ImGuiMCP::Begin("Color Picker", &colorPickerOpen,
+                            if (ImGuiMCP::Begin(QLT("Color Picker"), &colorPickerOpen,
                                 ImGuiMCP::ImGuiWindowFlags_AlwaysAutoResize |
                                 ImGuiMCP::ImGuiWindowFlags_NoCollapse))
                             {

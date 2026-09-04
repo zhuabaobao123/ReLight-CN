@@ -159,6 +159,12 @@
     "Select a region used for external emittance (Change light colors based on time of day, good for window lights)": "选择用于外部发光的区域（根据时间改变灯光颜色，适合窗户灯）",
     "Flag Window": "标志窗口",
     "TES Light Flags": "TES 灯光标志",
-    "Flicker is controlled via the flicker settings menu": "闪烁由闪烁设置菜单控制"
+    "Flicker is controlled via the flicker settings menu": "闪烁由闪烁设置菜单控制",
+    "Color Picker": "颜色选择器",
+    "Confirm Delete Light Template": "确认删除光源模板",
+    "Position": "位置",
+    "Rotation": "旋转",
+    "RGB": "RGB",
+    "Community Shaders Flags": "Community Shaders 标志"
   }
 }

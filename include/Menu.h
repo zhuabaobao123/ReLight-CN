@@ -924,7 +924,7 @@ namespace UI {
         }
         else
         {
-            // Single entry ï¿½ just a flat selectable
+            // Single entry — just a flat selectable
             ImGuiMCP::PushID(firstIdx);
             if (ImGuiMCP::Selectable(groupMenuName.c_str(), firstIdx == selectedIndex))
                 selectedIndex = firstIdx;
@@ -1085,7 +1085,7 @@ namespace UI {
 
                 if (globals::islInstalled) {
                     // --- Extended Flags ---
-                    ImGuiMCP::SeparatorText("Community Shaders Flags");
+                    ImGuiMCP::SeparatorText(QLT("Community Shaders Flags"));
 
                     FlagCheckbox(
                         "Inverse Square",
@@ -1272,7 +1272,7 @@ namespace UI {
 
           if(globals::islInstalled){
           // --- Extended Flags ---
-          ImGuiMCP::SeparatorText("Community Shaders Flags");
+          ImGuiMCP::SeparatorText(QLT("Community Shaders Flags"));
 
           FlagCheckbox(
               "Inverse Square",
